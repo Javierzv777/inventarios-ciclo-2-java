@@ -8,6 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import com.example.inventariosappspring.controlador.ProductoControlador;
+import com.example.inventariosappspring.modelo.Producto;
 import com.example.inventariosappspring.modelo.ProductoRepositorio;
 import com.example.inventariosappspring.vista.Vista;
 
@@ -31,6 +32,7 @@ public class InventariosappspringApplication {
 	public void applicationRunner(){
 		// ProductoControlador controlador = new ProductoControlador(productoRepositorio, new Vista() );
 		// controlador.buscarProductos();
+		// Producto producto = new Producto();
 		Vista vista = new Vista();
 		
 	}

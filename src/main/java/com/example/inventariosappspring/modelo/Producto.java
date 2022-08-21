@@ -1,10 +1,16 @@
 package com.example.inventariosappspring.modelo;
 
+import java.io.Serializable;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("productos")
-public class Producto {
+public class Producto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     private Integer codigo;
     private String nombre;
@@ -12,44 +18,44 @@ public class Producto {
     private Integer inventario;
 
     Producto(Integer codigo, String nombre, double precio, Integer inventario) {
-
+        //@Column
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
         this.inventario = inventario;
     }
 
-    public Integer getCodigo() {
-        return codigo;
-    }
+    // public Integer getCodigo() {
+    //     return codigo;
+    // }
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
-    }
+    // public void setCodigo(Integer codigo) {
+    //     this.codigo = codigo;
+    // }
 
-    public String getNombre() {
-        return nombre;
-    }
+    // public String getNombre() {
+    //     return nombre;
+    // }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    // public void setNombre(String nombre) {
+    //     this.nombre = nombre;
+    // }
 
-    public double getPrecio() {
-        return precio;
-    }
+    // public double getPrecio() {
+    //     return precio;
+    // }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
-    }
+    // public void setPrecio(double precio) {
+    //     this.precio = precio;
+    // }
 
-    public Integer getInventario() {
-        return inventario;
-    }
+    // public Integer getInventario() {
+    //     return inventario;
+    // }
 
-    public void setInventario(Integer inventario) {
-        this.inventario = inventario;
-    }
+    // public void setInventario(Integer inventario) {
+    //     this.inventario = inventario;
+    // }
     // @Override
     // public String toString() {
     // return "Producto("
