@@ -8,7 +8,10 @@ import java.util.List;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.example.inventariosappspring.controlador.ProductoControlador;
@@ -25,6 +28,7 @@ public class Vista extends javax.swing.JFrame {
     private ProductoControlador controlador;
     private List<Producto> productos;
     private DefaultTableModel modelo;
+    //ListSelectionModel rowEliminar;
     // private Object[] modeloTabla = {"codigo", "nombre", "precio", "inventario"};
     /**
      * Creates new form formulario
@@ -148,6 +152,9 @@ public class Vista extends javax.swing.JFrame {
         modelo.setColumnIdentifiers(header);
         jTable1.setModel(modelo);
         jScrollPane1.setViewportView(jTable1);
+        
+        //rowEliminar = jTable1.getSelectionModel();
+       
         cargar();
          
        
@@ -257,7 +264,11 @@ public class Vista extends javax.swing.JFrame {
     }                                                
 
     private void bottonBorrarActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        JOptionPane.showConfirmDialog(rootPane, "producto actualizado");
+        JOptionPane.showConfirmDialog(rootPane, "¿Desea borrar el Producto?");
+        ListSelectionModel model = jTable1.getSelectionModel();
+        Integer id = Integer.parseInt(jTable1.getModel().getValueAt(model.getMinSelectionIndex(), 0).toString()); 
+        this.controlador.eliminar(id);
+        cargar();
     }                                            
 
     /**

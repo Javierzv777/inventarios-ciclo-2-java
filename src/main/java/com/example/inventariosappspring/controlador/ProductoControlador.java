@@ -33,4 +33,9 @@ public class ProductoControlador {
     public void agregar (Producto producto){
         repositorioProducto.save(producto);
     }
+
+    public void eliminar (Integer id){
+        //Producto producto = (<Producto>) repositorioProducto.findById(id);
+        repositorioProducto.deleteById(id);
+    }
 }
