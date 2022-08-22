@@ -4,6 +4,13 @@
  */
 package com.example.inventariosappspring.vista;
 
+// import java.awt.*;
+import java.awt.event.*;
+// import javax.swing.*;
+
+import java.awt.event.KeyListener;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JDialog;
@@ -13,6 +20,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
+
 
 import com.example.inventariosappspring.controlador.ProductoControlador;
 import com.example.inventariosappspring.modelo.Producto;
@@ -61,8 +70,27 @@ public class Vista extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextNombre = new javax.swing.JTextField();
+
+        
         jTextPrecio = new javax.swing.JTextField();
-        jTextInventario = new javax.swing.JTextField();
+
+        jTextPrecio.addKeyListener( new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                     e.consume();  // if it's not a number, ignore the event
+                }
+            }
+         });
+        jTextInventario = new javax.swing.JFormattedTextField();
+        jTextInventario.addKeyListener( new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                     e.consume();  // if it's not a number, ignore the event
+                }
+            }
+         });
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -239,6 +267,10 @@ public class Vista extends javax.swing.JFrame {
     }
     private void bottonAgregarActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
+        if(jTextNombre.getText().isEmpty() || jTextInventario.getText().isEmpty() || jTextPrecio.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "debe llenar todos los campos");
+            return;
+        }
         Producto nuevo = new Producto();
         nuevo.setNombre(jTextNombre.getText());
         nuevo.setPrecio(Double.parseDouble(jTextPrecio.getText()));
