@@ -10,11 +10,10 @@ import com.example.inventariosappspring.vista.Vista;
 public class ProductoControlador {
     
     ProductoRepositorio repositorioProducto;
-    Vista vista;
     
-    public ProductoControlador (ProductoRepositorio repositorioProducto, Vista vista){
+    public ProductoControlador (ProductoRepositorio repositorioProducto){
         this.repositorioProducto = repositorioProducto;
-        this.vista = vista;
+        
     }
 
     private void manejadorEventos(){
@@ -24,8 +23,14 @@ public class ProductoControlador {
         // vista.getBottonInforme();
     }
 
-    public void buscarProductos(){
+
+    
+    public List<Producto> listar (){
         List<Producto> listaProductos = (List<Producto>) repositorioProducto.findAll();
-        System.out.println(listaProductos);
+        return listaProductos;
+    }
+
+    public void agregar (Producto producto){
+        repositorioProducto.save(producto);
     }
 }

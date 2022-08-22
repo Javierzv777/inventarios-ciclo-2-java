@@ -26,14 +26,14 @@ public class InventariosappspringApplication {
 	SpringApplicationBuilder builder = new SpringApplicationBuilder(InventariosappspringApplication.class);
     builder.headless(false);
     ConfigurableApplicationContext context = builder.run(args);
-	}
+}
 
 	@Bean
 	public void applicationRunner(){
-		// ProductoControlador controlador = new ProductoControlador(productoRepositorio, new Vista() );
 		// controlador.buscarProductos();
 		// Producto producto = new Producto();
-		Vista vista = new Vista();
-		
+		ProductoControlador controlador = new ProductoControlador(productoRepositorio);
+		Vista vista = new Vista(controlador);
+
 	}
 }

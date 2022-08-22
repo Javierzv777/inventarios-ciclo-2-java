@@ -4,21 +4,39 @@
  */
 package com.example.inventariosappspring.vista;
 
-import javax.swing.JOptionPane;
+import java.util.List;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import com.example.inventariosappspring.controlador.ProductoControlador;
+import com.example.inventariosappspring.modelo.Producto;
+import com.example.inventariosappspring.modelo.ProductoRepositorio;
 /**
  *
  * @author javier
  */
-public class Vista extends javax.swing.JFrame {
 
+
+public class Vista extends javax.swing.JFrame {
+   
+    private ProductoControlador controlador;
+    private List<Producto> productos;
+    private DefaultTableModel modelo;
+    // private Object[] modeloTabla = {"codigo", "nombre", "precio", "inventario"};
     /**
      * Creates new form formulario
      */
-    public Vista() {
+    public Vista(ProductoControlador controlGeneral) {
+        this.controlador = controlGeneral;
+        this.productos = this.controlador.listar();
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("caja de productos");
         setVisible(true);
+        
     }
 
     /**
@@ -29,6 +47,8 @@ public class Vista extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
+    // 
+    
 
         jPanel2 = new javax.swing.JPanel();
         bottonAgregar = new javax.swing.JButton();
@@ -36,9 +56,9 @@ public class Vista extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        jTextNombre = new javax.swing.JTextField();
+        jTextPrecio = new javax.swing.JTextField();
+        jTextInventario = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -61,20 +81,21 @@ public class Vista extends javax.swing.JFrame {
 
         jLabel5.setText("Inventario:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextNombreActionPerformed(evt);
             }
         });
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jTextPrecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jTextPrecioActionPerformed(evt);
             }
         });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
+        jPanel2.setBorder(new TitledBorder("agrega tu producto"));
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -92,9 +113,9 @@ public class Vista extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addGap(26, 26, 26)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField3))))
+                            .addComponent(jTextNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                            .addComponent(jTextPrecio)
+                            .addComponent(jTextInventario))))
                 .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -103,17 +124,17 @@ public class Vista extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(bottonAgregar)
                 .addContainerGap())
@@ -121,32 +142,16 @@ public class Vista extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 1, 15)); // NOI18N
         jLabel1.setText("Bienvenido a la App de Inventario !!");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Nombre", "Precio", "Inventario"
-            }
-        ));
+        //set table
+        modelo = new DefaultTableModel();
+        String[] header = { "Código", "Nombre", "Precio", "Inventario" };        
+        modelo.setColumnIdentifiers(header);
+        jTable1.setModel(modelo);
         jScrollPane1.setViewportView(jTable1);
+        cargar();
+         
+       
+
 
         bottonBorrar.setText("Borrar Producto");
         bottonBorrar.addActionListener(new java.awt.event.ActionListener() {
@@ -211,17 +216,32 @@ public class Vista extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
-
+    }// </editor-fold>     
+    
+    
+    public void cargar (){
+        
+        modelo.setNumRows(0);
+        for (Producto producto : this.controlador.listar()) {
+            String[] fila = {producto.getCodigo()+"", producto.getNombre(), producto.getPrecio()+"", producto.getInventario()+""};
+            modelo.addRow(fila);
+        }
+    }
     private void bottonAgregarActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
+        Producto nuevo = new Producto();
+        nuevo.setNombre(jTextNombre.getText());
+        nuevo.setPrecio(Double.parseDouble(jTextPrecio.getText()));
+        nuevo.setInventario(Integer.parseInt(jTextInventario.getText()));
+        this.controlador.agregar(nuevo);
+        cargar();
     }                                             
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void jTextNombreActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
     }                                           
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void jTextPrecioActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
     }                                           
 
@@ -231,6 +251,7 @@ public class Vista extends javax.swing.JFrame {
 
     private void bottonActualizarActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         // TODO add your handling code here:
+        
         JOptionPane.showMessageDialog(rootPane, "producto actualizado");
         
     }                                                
@@ -257,8 +278,8 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextNombre;
+    private javax.swing.JTextField jTextPrecio;
+    private javax.swing.JTextField jTextInventario;
     // End of variables declaration                   
 }

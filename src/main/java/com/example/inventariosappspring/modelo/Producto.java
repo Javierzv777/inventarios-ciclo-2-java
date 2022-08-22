@@ -12,16 +12,47 @@ public class Producto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private Integer codigo;
+    @Column("codigo")
+    private Long codigo;
+
+    @Column("nombre")
     private String nombre;
-    private double precio;
+
+    @Column("precio")
+    private Double precio;
+    
+    @Column("inventario")
     private Integer inventario;
 
-    Producto(Integer codigo, String nombre, double precio, Integer inventario) {
-        //@Column
+    public Long getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(Long codigo) {
         this.codigo = codigo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(Double precio) {
         this.precio = precio;
+    }
+
+    public Integer getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(Integer inventario) {
         this.inventario = inventario;
     }
 
