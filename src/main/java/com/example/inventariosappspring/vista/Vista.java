@@ -299,28 +299,29 @@ public class Vista extends javax.swing.JFrame {
     }                                                
 
     private void bottonBorrarActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        int resp = JOptionPane.showConfirmDialog(rootPane, "¿Desea borrar el Producto?");
-        String mensaje = "";
-        switch (resp) {
-            case 0:
-                mensaje = "Producto eliminado";
-                ListSelectionModel model = jTable1.getSelectionModel();
-                Integer id = Integer.parseInt(jTable1.getModel().getValueAt(model.getMinSelectionIndex(), 0).toString()); 
-                this.controlador.eliminar(id);
-                cargar();
-                break;
-            case 1:
-                mensaje = "producto no eliminado";
-                break;
-            case 2:
-                mensaje = "operación Cancelada";
-            }
-            JOptionPane.showMessageDialog(null, mensaje);
+        if (jTable1.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Por favor seleccione un producto", "ERROR", 0 );
+        } else {
+            String mensaje = "";
+            int resp = JOptionPane.showConfirmDialog(rootPane, "¿Desea borrar el Producto?");
+            switch (resp) {
+                case 0:
+                    mensaje = "Producto eliminado";
+                    ListSelectionModel model = jTable1.getSelectionModel();
+                    Integer id = Integer.parseInt(jTable1.getModel().getValueAt(model.getMinSelectionIndex(), 0).toString()); 
+                    this.controlador.eliminar(id);
+                    cargar();
+                    break;
+                case 1:
+                    mensaje = "producto no eliminado";
+                    break;
+                case 2:
+                    mensaje = "operación Cancelada";
+                }
+                JOptionPane.showMessageDialog(null, mensaje);
+        }
 
-        // ListSelectionModel model = jTable1.getSelectionModel();
-        // Integer id = Integer.parseInt(jTable1.getModel().getValueAt(model.getMinSelectionIndex(), 0).toString()); 
-        // this.controlador.eliminar(id);
-        // cargar();
+
     }                                            
 
     /**
