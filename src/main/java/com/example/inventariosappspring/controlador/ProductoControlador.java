@@ -1,7 +1,8 @@
 package com.example.inventariosappspring.controlador;
 
 import java.util.List;
- import java.awt.event.ActionListener;
+import java.util.Optional;
+import java.awt.event.ActionListener;
 
 import com.example.inventariosappspring.modelo.Producto;
 import com.example.inventariosappspring.modelo.ProductoRepositorio;
@@ -37,5 +38,16 @@ public class ProductoControlador {
     public void eliminar (Integer id){
         //Producto producto = (<Producto>) repositorioProducto.findById(id);
         repositorioProducto.deleteById(id);
+    }
+
+    public void actualizar ( Integer id, String nombre, Double precio, Integer inventario){
+       Optional <Producto> productoOptional  =  repositorioProducto.findById(id);
+       
+       Producto producto = productoOptional.get();
+       producto.setNombre(nombre);
+       producto.setPrecio(precio);
+       producto.setInventario(inventario);
+        repositorioProducto.save(producto);        
+       System.out.println(producto);
     }
 }

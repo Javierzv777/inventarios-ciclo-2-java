@@ -12,10 +12,14 @@ import java.awt.event.KeyListener;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.List;
-
+import java.awt.Toolkit;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpringLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -37,6 +41,16 @@ public class Vista extends javax.swing.JFrame {
     private ProductoControlador controlador;
     private List<Producto> productos;
     private DefaultTableModel modelo;
+    static JFrame f;
+
+    public class AdaptadorNumeros extends KeyAdapter{
+        public void keyTyped(KeyEvent e) {
+            char c = e.getKeyChar();
+            if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+                 e.consume();  // if it's not a number, ignore the event
+            }
+        }
+    }
     //ListSelectionModel rowEliminar;
     // private Object[] modeloTabla = {"codigo", "nombre", "precio", "inventario"};
     /**
@@ -74,23 +88,9 @@ public class Vista extends javax.swing.JFrame {
         
         jTextPrecio = new javax.swing.JTextField();
 
-        jTextPrecio.addKeyListener( new KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-                     e.consume();  // if it's not a number, ignore the event
-                }
-            }
-         });
+        jTextPrecio.addKeyListener( new AdaptadorNumeros());
         jTextInventario = new javax.swing.JFormattedTextField();
-        jTextInventario.addKeyListener( new KeyAdapter() {
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-                     e.consume();  // if it's not a number, ignore the event
-                }
-            }
-         });
+        jTextInventario.addKeyListener( new AdaptadorNumeros());
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -203,6 +203,9 @@ public class Vista extends javax.swing.JFrame {
         });
 
         bottonInforme.setText("Generar Informee");
+
+
+
         bottonInforme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bottonInformeActionPerformed(evt);
@@ -291,10 +294,80 @@ public class Vista extends javax.swing.JFrame {
         // TODO add your handling code here:
     }                                             
 
+    private void bnActualizarActionPerformed(java.awt.event.ActionEvent evt, Integer id){
+        
+        this.controlador.actualizar(
+        id, 
+        jTextNombreActualizar.getText(), 
+        Double.parseDouble(jTextPrecioActualizar.getText()),
+        Integer.parseInt(jTextInventarioActualizar.getText())
+        );
+    }
+
+
+
     private void bottonActualizarActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         // TODO add your handling code here:
-        
-        JOptionPane.showMessageDialog(rootPane, "producto actualizado");
+        if (jTable1.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Por favor seleccione un producto", "ERROR", 0 );
+        } else {
+            Integer id = Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 0).toString()); 
+            String nombre = jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 1).toString(); 
+            String precio = jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 2).toString(); 
+            String inventario = jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 3).toString(); 
+            
+            f = new JFrame("frame");
+            JDialog d = new JDialog(f, "dialog Box");
+                d.setLocationRelativeTo(null);
+                // create a label
+                JLabel labelTitle = new JLabel("Actualizar Producto");
+                //d.setLayout(null);
+                bnAceptarUp = new javax.swing.JButton("Aceptar");
+                bnAceptarUp.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        bnActualizarActionPerformed(evt, id);
+                        cargar();
+                        d.setVisible(false);
+                    }
+                });
+                bnCancelarUp = new javax.swing.JButton("Cancelar");
+                bnCancelarUp.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        d.setVisible(false);
+                    }
+                });
+                jTextNombreActualizar = new JTextField(nombre);
+                jTextPrecioActualizar = new JTextField(precio);
+                jTextInventarioActualizar = new JTextField(inventario);
+                labelNombreUp = new JLabel("nombre:");
+                labelPrecioUp = new JLabel("precio:");
+                labelInventarioUp = new JLabel("Inventario");
+                jTextNombreActualizar.setBounds(120, 60, 100, 25);
+                jTextPrecioActualizar.setBounds(120, 90, 100, 25);
+                jTextInventarioActualizar.setBounds(120, 120, 100, 25);
+                jTextPrecioActualizar.addKeyListener( new AdaptadorNumeros());
+                jTextInventarioActualizar.addKeyListener( new AdaptadorNumeros());
+                labelTitle.setBounds(40, 20, 130, 25);
+                labelNombreUp.setBounds(20, 60, 100, 25);
+                labelPrecioUp.setBounds(20, 90, 100, 25);
+                labelInventarioUp.setBounds(20, 120, 100, 25);
+                bnAceptarUp.setBounds(30, 190, 90, 25);
+                bnCancelarUp.setBounds(150, 190, 90, 25);
+                d.add(bnAceptarUp);
+                d.add(bnCancelarUp);
+                d.add(jTextNombreActualizar);
+                d.add(jTextPrecioActualizar);
+                d.add(jTextInventarioActualizar);
+                d.add(labelNombreUp);
+                d.add(labelPrecioUp);
+                d.add(labelInventarioUp);
+                d.add(labelTitle);
+                d.setSize(300, 300);
+                d.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width-300)/2, (Toolkit.getDefaultToolkit().getScreenSize().height-400)/2);
+                d.setLayout(null);
+                d.setVisible(true);
+        }
+        // JOptionPane.showMessageDialog(rootPane, "producto actualizado");
         
     }                                                
 
@@ -307,8 +380,7 @@ public class Vista extends javax.swing.JFrame {
             switch (resp) {
                 case 0:
                     mensaje = "Producto eliminado";
-                    ListSelectionModel model = jTable1.getSelectionModel();
-                    Integer id = Integer.parseInt(jTable1.getModel().getValueAt(model.getMinSelectionIndex(), 0).toString()); 
+                    Integer id = Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 0).toString()); 
                     this.controlador.eliminar(id);
                     cargar();
                     break;
@@ -329,7 +401,9 @@ public class Vista extends javax.swing.JFrame {
      */
    
 
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify    
+    private javax.swing.JButton bnCancelarUp;
+    private javax.swing.JButton bnAceptarUp;                 
     private javax.swing.JButton bottonActualizar;
     private javax.swing.JButton bottonAgregar;
     private javax.swing.JButton bottonBorrar;
@@ -345,5 +419,11 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JTextField jTextNombre;
     private javax.swing.JTextField jTextPrecio;
     private javax.swing.JTextField jTextInventario;
+    private javax.swing.JTextField jTextNombreActualizar;
+    private javax.swing.JTextField jTextPrecioActualizar;
+    private javax.swing.JTextField jTextInventarioActualizar;
+    private javax.swing.JLabel labelNombreUp;
+    private javax.swing.JLabel labelPrecioUp;
+    private javax.swing.JLabel labelInventarioUp;
     // End of variables declaration                   
 }
