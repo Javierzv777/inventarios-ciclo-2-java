@@ -202,7 +202,7 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
-        bottonInforme.setText("Generar Informee");
+        bottonInforme.setText("Generar Informe");
 
 
 
@@ -292,6 +292,52 @@ public class Vista extends javax.swing.JFrame {
 
     private void bottonInformeActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
+        Double precioMayor = Double.MIN_VALUE;
+        String precioMayorNombre = "";
+        Double precioMenor = Double.MAX_VALUE;
+        String precioMenorNombre = "";
+        Double promedioPrecios = 0.0;
+        long valorInventario = 0;
+        for (Producto producto : this.productos) {
+            if(producto.getPrecio() > precioMayor){
+                precioMayor = producto.getPrecio();
+                precioMayorNombre = producto.getNombre();
+            }
+            if(producto.getPrecio() < precioMenor){
+                precioMenor = producto.getPrecio();
+                precioMenorNombre = producto.getNombre();
+            }
+            promedioPrecios += producto.getPrecio();  
+            valorInventario += producto.getPrecio() * producto.getInventario();
+        }
+        JDialog d = new JDialog(this, "Informe" );
+        bnCerrarInforme = new javax.swing.JButton("Cerrar");
+        bnCerrarInforme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                d.setVisible(false);
+            }
+        });
+        labelInforme = new JLabel("Informe del Inventario: ");
+        labelPrecioMayor = new JLabel("Producto precio mayor: " + precioMayorNombre );
+        labelPrecioMenor = new JLabel("Producto precio menor: " + precioMenorNombre );
+        labelPromedio = new JLabel("Promedio precios: " + String.format("%.1f",promedioPrecios / this.productos.size()));
+        labelTotal = new JLabel("Valor del Invenario: " + valorInventario); 
+        labelInforme.setBounds(50, 20, 200, 25);
+        labelPrecioMayor.setBounds(20, 60, 200, 25);
+        labelPrecioMenor.setBounds(20, 90, 200, 25);
+        labelPromedio.setBounds(20, 120, 200, 25);
+        labelTotal.setBounds(20, 150, 200, 25);
+        bnCerrarInforme.setBounds(40, 200, 150, 25);
+        d.add(bnCerrarInforme);
+        d.add(labelInforme);
+        d.add(labelPrecioMayor);
+        d.add(labelPrecioMenor);
+        d.add(labelPromedio);
+        d.add(labelTotal);
+        d.setSize(300, 300);
+        d.setLayout(null);
+        d.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width-300)/2, (Toolkit.getDefaultToolkit().getScreenSize().height-300)/2);
+        d.setVisible(true);
     }                                             
 
     private void bnActualizarActionPerformed(java.awt.event.ActionEvent evt, Integer id){
@@ -311,13 +357,14 @@ public class Vista extends javax.swing.JFrame {
         if (jTable1.getSelectedRow() == -1){
             JOptionPane.showMessageDialog(null, "Por favor seleccione un producto", "ERROR", 0 );
         } else {
+            
             Integer id = Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 0).toString()); 
             String nombre = jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 1).toString(); 
             String precio = jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 2).toString(); 
             String inventario = jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 3).toString(); 
             
             f = new JFrame("frame");
-            JDialog d = new JDialog(f, "dialog Box");
+            JDialog d = new JDialog(this, "Actualizar Producto");
                 d.setLocationRelativeTo(null);
                 // create a label
                 JLabel labelTitle = new JLabel("Actualizar Producto");
@@ -325,9 +372,20 @@ public class Vista extends javax.swing.JFrame {
                 bnAceptarUp = new javax.swing.JButton("Aceptar");
                 bnAceptarUp.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        bnActualizarActionPerformed(evt, id);
-                        cargar();
                         d.setVisible(false);
+                        int resp = JOptionPane.showConfirmDialog(rootPane, "¿Deseas actualizar el producto?");
+                        switch (resp) {
+                            case 0:
+                                bnActualizarActionPerformed(evt, id);
+                                cargar();
+                                break;
+                            case 1:
+                                break;
+                            case 2:
+                                break;
+                            }
+                            
+                        
                     }
                 });
                 bnCancelarUp = new javax.swing.JButton("Cancelar");
@@ -375,22 +433,19 @@ public class Vista extends javax.swing.JFrame {
         if (jTable1.getSelectedRow() == -1){
             JOptionPane.showMessageDialog(null, "Por favor seleccione un producto", "ERROR", 0 );
         } else {
-            String mensaje = "";
             int resp = JOptionPane.showConfirmDialog(rootPane, "¿Desea borrar el Producto?");
             switch (resp) {
                 case 0:
-                    mensaje = "Producto eliminado";
+                    JOptionPane.showMessageDialog(null, "Producto Eliminado");
                     Integer id = Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 0).toString()); 
                     this.controlador.eliminar(id);
                     cargar();
                     break;
                 case 1:
-                    mensaje = "producto no eliminado";
                     break;
                 case 2:
-                    mensaje = "operación Cancelada";
                 }
-                JOptionPane.showMessageDialog(null, mensaje);
+                
         }
 
 
@@ -401,7 +456,8 @@ public class Vista extends javax.swing.JFrame {
      */
    
 
-    // Variables declaration - do not modify    
+    // Variables declaration - do not modify 
+    private javax.swing.JButton bnCerrarInforme;   
     private javax.swing.JButton bnCancelarUp;
     private javax.swing.JButton bnAceptarUp;                 
     private javax.swing.JButton bottonActualizar;
@@ -425,5 +481,10 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JLabel labelNombreUp;
     private javax.swing.JLabel labelPrecioUp;
     private javax.swing.JLabel labelInventarioUp;
+    private javax.swing.JLabel labelPrecioMayor;
+    private javax.swing.JLabel labelPrecioMenor;
+    private javax.swing.JLabel labelPromedio;
+    private javax.swing.JLabel labelTotal;
+    private javax.swing.JLabel labelInforme;
     // End of variables declaration                   
 }
