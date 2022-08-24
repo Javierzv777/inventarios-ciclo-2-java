@@ -372,18 +372,22 @@ public class Vista extends javax.swing.JFrame {
                 bnAceptarUp = new javax.swing.JButton("Aceptar");
                 bnAceptarUp.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        d.setVisible(false);
-                        int resp = JOptionPane.showConfirmDialog(rootPane, "¿Deseas actualizar el producto?");
-                        switch (resp) {
-                            case 0:
-                                bnActualizarActionPerformed(evt, id);
-                                cargar();
-                                break;
-                            case 1:
-                                break;
-                            case 2:
-                                break;
-                            }
+                        if (jTextNombreActualizar.getText().isEmpty() || jTextPrecioActualizar.getText().isEmpty() || jTextInventarioActualizar.getText().isEmpty()){
+                            JOptionPane.showMessageDialog(null, "debe llenar todos los campos");
+                        } else  {
+                            d.setVisible(false);
+                            int resp = JOptionPane.showConfirmDialog(rootPane, "¿Deseas actualizar el producto?");
+                            switch (resp) {
+                                case 0:
+                                    bnActualizarActionPerformed(evt, id);
+                                    cargar();
+                                    break;
+                                case 1:
+                                    break;
+                                case 2:
+                                    break;
+                                }
+                        }
                             
                         
                     }
