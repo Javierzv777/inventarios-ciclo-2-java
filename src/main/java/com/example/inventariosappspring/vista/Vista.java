@@ -5,31 +5,14 @@
 package com.example.inventariosappspring.vista;
 
 // import java.awt.*;
-import java.awt.event.*;
+
 // import javax.swing.*;
 
-import java.awt.event.KeyListener;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.List;
-import java.awt.Toolkit;
-import javax.swing.JDialog;
+
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.SpringLayout;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
-
-
 import com.example.inventariosappspring.controlador.ProductoControlador;
 import com.example.inventariosappspring.modelo.Producto;
-import com.example.inventariosappspring.modelo.ProductoRepositorio;
 /**
  *
  * @author javier
@@ -39,26 +22,17 @@ import com.example.inventariosappspring.modelo.ProductoRepositorio;
 public class Vista extends javax.swing.JFrame {
    
     private ProductoControlador controlador;
-    private List<Producto> productos;
     private DefaultTableModel modelo;
     static JFrame f;
-
-    public class AdaptadorNumeros extends KeyAdapter{
-        public void keyTyped(KeyEvent e) {
-            char c = e.getKeyChar();
-            if ( ((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-                 e.consume();  // if it's not a number, ignore the event
-            }
-        }
-    }
-    //ListSelectionModel rowEliminar;
-    // private Object[] modeloTabla = {"codigo", "nombre", "precio", "inventario"};
+    private Vista vista = this;
+    private Agregar agregar ;
+   
     /**
      * Creates new form formulario
      */
     public Vista(ProductoControlador controlGeneral) {
         this.controlador = controlGeneral;
-        this.productos = this.controlador.listar();
+        this.agregar = new Agregar(this.vista, this.controlador);
         initComponents();
         setLocationRelativeTo(null);
         setTitle("caja de productos");
@@ -75,22 +49,8 @@ public class Vista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
     // 
-    
 
-        jPanel2 = new javax.swing.JPanel();
-        bottonAgregar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextNombre = new javax.swing.JTextField();
-
-        
-        jTextPrecio = new javax.swing.JTextField();
-
-        jTextPrecio.addKeyListener( new AdaptadorNumeros());
-        jTextInventario = new javax.swing.JFormattedTextField();
-        jTextInventario.addKeyListener( new AdaptadorNumeros());
+      
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -99,78 +59,6 @@ public class Vista extends javax.swing.JFrame {
         bottonInforme = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        bottonAgregar.setText("Agregar Producto");
-        bottonAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bottonAgregarActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Nombre:");
-
-        jLabel4.setText("Precio:");
-
-        jLabel5.setText("Inventario:");
-
-        jTextNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextNombreActionPerformed(evt);
-            }
-        });
-
-        jTextPrecio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextPrecioActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2.setBorder(new TitledBorder("agrega tu producto"));
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(103, Short.MAX_VALUE)
-                .addComponent(bottonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4))
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
-                            .addComponent(jTextPrecio)
-                            .addComponent(jTextInventario))))
-                .addContainerGap(76, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextInventario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(bottonAgregar)
-                .addContainerGap())
-        );
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 1, 15)); // NOI18N
         jLabel1.setText("Bienvenido a la App de Inventario !!");
@@ -181,13 +69,9 @@ public class Vista extends javax.swing.JFrame {
         jTable1.setModel(modelo);
         jScrollPane1.setViewportView(jTable1);
         
-        //rowEliminar = jTable1.getSelectionModel();
        
         cargar();
          
-       
-
-
         bottonBorrar.setText("Borrar Producto");
         bottonBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,15 +87,12 @@ public class Vista extends javax.swing.JFrame {
         });
 
         bottonInforme.setText("Generar Informe");
-
-
-
         bottonInforme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bottonInformeActionPerformed(evt);
             }
         });
-
+       
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -220,7 +101,7 @@ public class Vista extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(137, 137, 137)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addComponent(jLabel1))
@@ -243,7 +124,7 @@ public class Vista extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGap(30, 30, 30)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
@@ -265,195 +146,36 @@ public class Vista extends javax.swing.JFrame {
             String[] fila = {producto.getCodigo()+"", producto.getNombre(), producto.getPrecio()+"", producto.getInventario()+""};
             modelo.addRow(fila);
         }
-        jTextNombre.setText("");
-        jTextPrecio.setText("");
-        jTextInventario.setText("");
+        agregar.jTextNombre.setText("");
+        agregar.jTextPrecio.setText("");
+        agregar.jTextInventario.setText("");
     }
-    private void bottonAgregarActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add your handling code here:
-        if(jTextNombre.getText().isEmpty() || jTextInventario.getText().isEmpty() || jTextPrecio.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "debe llenar todos los campos");
-            return;
-        }
-        Producto nuevo = new Producto();
-        nuevo.setNombre(jTextNombre.getText());
-        nuevo.setPrecio(Double.parseDouble(jTextPrecio.getText()));
-        nuevo.setInventario(Integer.parseInt(jTextInventario.getText()));
-        this.controlador.agregar(nuevo);
-        cargar();
-    }                                             
-
-    private void jTextNombreActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    }                                           
-
-    private void jTextPrecioActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    }                                           
+                                            
+                                         
 
     private void bottonInformeActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
-        Double precioMayor = Double.MIN_VALUE;
-        String precioMayorNombre = "";
-        Double precioMenor = Double.MAX_VALUE;
-        String precioMenorNombre = "";
-        Double promedioPrecios = 0.0;
-        long valorInventario = 0;
-        for (Producto producto : this.productos) {
-            if(producto.getPrecio() > precioMayor){
-                precioMayor = producto.getPrecio();
-                precioMayorNombre = producto.getNombre();
-            }
-            if(producto.getPrecio() < precioMenor){
-                precioMenor = producto.getPrecio();
-                precioMenorNombre = producto.getNombre();
-            }
-            promedioPrecios += producto.getPrecio();  
-            valorInventario += producto.getPrecio() * producto.getInventario();
-        }
-        JDialog d = new JDialog(this, "Informe" );
-        bnCerrarInforme = new javax.swing.JButton("Cerrar");
-        bnCerrarInforme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                d.setVisible(false);
-            }
-        });
-        labelInforme = new JLabel("Informe del Inventario: ");
-        labelPrecioMayor = new JLabel("Producto precio mayor: " + precioMayorNombre );
-        labelPrecioMenor = new JLabel("Producto precio menor: " + precioMenorNombre );
-        labelPromedio = new JLabel("Promedio precios: " + String.format("%.1f",promedioPrecios / this.productos.size()));
-        labelTotal = new JLabel("Valor del Invenario: " + valorInventario); 
-        labelInforme.setBounds(50, 20, 200, 25);
-        labelPrecioMayor.setBounds(20, 60, 200, 25);
-        labelPrecioMenor.setBounds(20, 90, 200, 25);
-        labelPromedio.setBounds(20, 120, 200, 25);
-        labelTotal.setBounds(20, 150, 200, 25);
-        bnCerrarInforme.setBounds(40, 200, 150, 25);
-        d.add(bnCerrarInforme);
-        d.add(labelInforme);
-        d.add(labelPrecioMayor);
-        d.add(labelPrecioMenor);
-        d.add(labelPromedio);
-        d.add(labelTotal);
-        d.setSize(300, 300);
-        d.setLayout(null);
-        d.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width-300)/2, (Toolkit.getDefaultToolkit().getScreenSize().height-300)/2);
-        d.setVisible(true);
+        Informe informe = new Informe(this.vista, this.controlador);
+        informe.run();
     }                                             
 
-    private void bnActualizarActionPerformed(java.awt.event.ActionEvent evt, Integer id){
-        
-        this.controlador.actualizar(
-        id, 
-        jTextNombreActualizar.getText(), 
-        Double.parseDouble(jTextPrecioActualizar.getText()),
-        Integer.parseInt(jTextInventarioActualizar.getText())
-        );
-    }
+    
 
 
 
     private void bottonActualizarActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         // TODO add your handling code here:
-        if (jTable1.getSelectedRow() == -1){
-            JOptionPane.showMessageDialog(null, "Por favor seleccione un producto", "ERROR", 0 );
-        } else {
-            
-            Integer id = Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 0).toString()); 
-            String nombre = jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 1).toString(); 
-            String precio = jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 2).toString(); 
-            String inventario = jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 3).toString(); 
-            
-            f = new JFrame("frame");
-            JDialog d = new JDialog(this, "Actualizar Producto");
-                d.setLocationRelativeTo(null);
-                // create a label
-                JLabel labelTitle = new JLabel("Actualizar Producto");
-                //d.setLayout(null);
-                bnAceptarUp = new javax.swing.JButton("Aceptar");
-                bnAceptarUp.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        if (jTextNombreActualizar.getText().isEmpty() || jTextPrecioActualizar.getText().isEmpty() || jTextInventarioActualizar.getText().isEmpty()){
-                            JOptionPane.showMessageDialog(null, "debe llenar todos los campos");
-                        } else  {
-                            d.setVisible(false);
-                            int resp = JOptionPane.showConfirmDialog(rootPane, "¿Deseas actualizar el producto?");
-                            switch (resp) {
-                                case 0:
-                                    bnActualizarActionPerformed(evt, id);
-                                    cargar();
-                                    break;
-                                case 1:
-                                    break;
-                                case 2:
-                                    break;
-                                }
-                        }
-                            
-                        
-                    }
-                });
-                bnCancelarUp = new javax.swing.JButton("Cancelar");
-                bnCancelarUp.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        d.setVisible(false);
-                    }
-                });
-                jTextNombreActualizar = new JTextField(nombre);
-                jTextPrecioActualizar = new JTextField(precio);
-                jTextInventarioActualizar = new JTextField(inventario);
-                labelNombreUp = new JLabel("nombre:");
-                labelPrecioUp = new JLabel("precio:");
-                labelInventarioUp = new JLabel("Inventario");
-                jTextNombreActualizar.setBounds(120, 60, 100, 25);
-                jTextPrecioActualizar.setBounds(120, 90, 100, 25);
-                jTextInventarioActualizar.setBounds(120, 120, 100, 25);
-                jTextPrecioActualizar.addKeyListener( new AdaptadorNumeros());
-                jTextInventarioActualizar.addKeyListener( new AdaptadorNumeros());
-                labelTitle.setBounds(40, 20, 130, 25);
-                labelNombreUp.setBounds(20, 60, 100, 25);
-                labelPrecioUp.setBounds(20, 90, 100, 25);
-                labelInventarioUp.setBounds(20, 120, 100, 25);
-                bnAceptarUp.setBounds(30, 190, 90, 25);
-                bnCancelarUp.setBounds(150, 190, 90, 25);
-                d.add(bnAceptarUp);
-                d.add(bnCancelarUp);
-                d.add(jTextNombreActualizar);
-                d.add(jTextPrecioActualizar);
-                d.add(jTextInventarioActualizar);
-                d.add(labelNombreUp);
-                d.add(labelPrecioUp);
-                d.add(labelInventarioUp);
-                d.add(labelTitle);
-                d.setSize(300, 300);
-                d.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width-300)/2, (Toolkit.getDefaultToolkit().getScreenSize().height-400)/2);
-                d.setLayout(null);
-                d.setVisible(true);
-        }
+
+        Actualizar actualizar = new Actualizar(this.vista,  this.controlador);
+        actualizar.run();
         // JOptionPane.showMessageDialog(rootPane, "producto actualizado");
         
     }                                                
 
     private void bottonBorrarActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        if (jTable1.getSelectedRow() == -1){
-            JOptionPane.showMessageDialog(null, "Por favor seleccione un producto", "ERROR", 0 );
-        } else {
-            int resp = JOptionPane.showConfirmDialog(rootPane, "¿Desea borrar el Producto?");
-            switch (resp) {
-                case 0:
-                    JOptionPane.showMessageDialog(null, "Producto Eliminado");
-                    Integer id = Integer.parseInt(jTable1.getModel().getValueAt(jTable1.getSelectionModel().getMinSelectionIndex(), 0).toString()); 
-                    this.controlador.eliminar(id);
-                    cargar();
-                    break;
-                case 1:
-                    break;
-                case 2:
-                }
-                
-        }
-
-
+       
+        Borrar borrar = new Borrar(this.vista, this.controlador);
+        borrar.run();
     }                                            
 
     /**
@@ -462,34 +184,13 @@ public class Vista extends javax.swing.JFrame {
    
 
     // Variables declaration - do not modify 
-    private javax.swing.JButton bnCerrarInforme;   
-    private javax.swing.JButton bnCancelarUp;
-    private javax.swing.JButton bnAceptarUp;                 
     private javax.swing.JButton bottonActualizar;
-    private javax.swing.JButton bottonAgregar;
     private javax.swing.JButton bottonBorrar;
     private javax.swing.JButton bottonInforme;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextNombre;
-    private javax.swing.JTextField jTextPrecio;
-    private javax.swing.JTextField jTextInventario;
-    private javax.swing.JTextField jTextNombreActualizar;
-    private javax.swing.JTextField jTextPrecioActualizar;
-    private javax.swing.JTextField jTextInventarioActualizar;
-    private javax.swing.JLabel labelNombreUp;
-    private javax.swing.JLabel labelPrecioUp;
-    private javax.swing.JLabel labelInventarioUp;
-    private javax.swing.JLabel labelPrecioMayor;
-    private javax.swing.JLabel labelPrecioMenor;
-    private javax.swing.JLabel labelPromedio;
-    private javax.swing.JLabel labelTotal;
-    private javax.swing.JLabel labelInforme;
+    public javax.swing.JTable jTable1;
+
+
     // End of variables declaration                   
 }
