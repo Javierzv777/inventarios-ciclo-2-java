@@ -4,15 +4,15 @@ import javax.swing.JOptionPane;
 
 // import com.example.inventariosappspring.controlador.ProductoControlador;
 
-public class Borrar {
+public class BorrarVista {
     // ProductoControlador controlador;
     private Integer id;
-    Vista vista;
+    VistaPrincipal vista;
     public Integer getId() {
         return id;
     }
 
-    public Borrar(Vista vista){
+    public BorrarVista(VistaPrincipal vista){
         this.vista = vista;
         
     }

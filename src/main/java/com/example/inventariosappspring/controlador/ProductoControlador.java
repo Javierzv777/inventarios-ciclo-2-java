@@ -10,34 +10,30 @@ import java.awt.event.ActionListener;
 
 import com.example.inventariosappspring.modelo.Producto;
 import com.example.inventariosappspring.modelo.ProductoRepositorio;
-import com.example.inventariosappspring.vista.Actualizar;
-import com.example.inventariosappspring.vista.Agregar;
-import com.example.inventariosappspring.vista.Borrar;
-import com.example.inventariosappspring.vista.Informe;
-import com.example.inventariosappspring.vista.Vista;
+import com.example.inventariosappspring.vista.ActualizarVista;
+import com.example.inventariosappspring.vista.AgregarVista;
+import com.example.inventariosappspring.vista.BorrarVista;
+import com.example.inventariosappspring.vista.InformeVista;
+import com.example.inventariosappspring.vista.VistaPrincipal;
 
 public class ProductoControlador implements ActionListener{
     
     ProductoRepositorio repositorioProducto;
-    Vista vista;
-    Actualizar actualizar;
-    Agregar agregar;
-    Borrar borrar;
-    Informe informe;
+    VistaPrincipal vista;
+    ActualizarVista actualizar;
+    AgregarVista agregar;
+    BorrarVista borrar;
+    InformeVista informe;
     public ProductoControlador (
         ProductoRepositorio repositorioProducto, 
-        Vista vista, 
-        Actualizar actualizar, 
-        Agregar agregar,
-        Borrar borrar,
-        Informe informe
+        VistaPrincipal vista
         ){
         this.repositorioProducto = repositorioProducto;
         this.vista = vista;
-        this.actualizar = actualizar;
-        this.agregar = agregar;
-        this.borrar = borrar;
-        this.informe = informe;
+        // this.actualizar = actualizar;
+        // this.agregar = agregar;
+        // this.borrar = borrar;
+        // this.informe = informe;
         manejadorEventos();
     }
 
@@ -76,7 +72,7 @@ public class ProductoControlador implements ActionListener{
 
     public void eliminar (){
         
-        Borrar borrar = new Borrar(this.vista);
+        BorrarVista borrar = new BorrarVista(this.vista);
         borrar.run();
         if(borrar.getId() != null){
             repositorioProducto.deleteById(borrar.getId());
@@ -85,7 +81,7 @@ public class ProductoControlador implements ActionListener{
         }
 
     public void actualizar (){
-        actualizar = new Actualizar(this.vista);
+        actualizar = new ActualizarVista(this.vista);
         actualizar.run();
         actualizar.getBnAceptarUp().addActionListener(this);
     }
@@ -131,7 +127,7 @@ public class ProductoControlador implements ActionListener{
     public void informe (){
        
         
-        Informe informe = new Informe(this.vista);
+        InformeVista informe = new InformeVista(this.vista);
         informe.run();
 
                 for (Producto producto : repositorioProducto.findAll()) {

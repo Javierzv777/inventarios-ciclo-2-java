@@ -5,11 +5,11 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.event.*;
-public class Actualizar extends JDialog{
+public class ActualizarVista extends JDialog{
     
     // private ProductoControlador controlador;
-    public Actualizar actualizar = this;
-    private Vista vista;
+    public ActualizarVista actualizar = this;
+    private VistaPrincipal vista;
     private Integer id;
     public class AdaptadorNumeros extends KeyAdapter{
         public void keyTyped(KeyEvent e) {
@@ -20,7 +20,7 @@ public class Actualizar extends JDialog{
         }
     }
 
-    public Actualizar (Vista vista){
+    public ActualizarVista (VistaPrincipal vista){
         super(vista, "Actualizar Producto");
         this.vista = vista;
         initComponents();

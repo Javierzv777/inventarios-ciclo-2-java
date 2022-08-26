@@ -10,9 +10,9 @@ import javax.swing.border.TitledBorder;
 import java.awt.event.*;
 
 
-public class Agregar extends JPanel{
+public class AgregarVista extends JPanel{
     // private ProductoControlador controlador;
-    private Vista vista;
+    private VistaPrincipal vista;
     
     public class AdaptadorNumeros extends KeyAdapter{
         public void keyTyped(KeyEvent e) {
@@ -23,7 +23,7 @@ public class Agregar extends JPanel{
         }
     }
 
-    public Agregar(Vista vista){
+    public AgregarVista(VistaPrincipal vista){
         // this.controlador = controlador;
         this.vista = vista;
         

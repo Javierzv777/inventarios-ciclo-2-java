@@ -22,22 +22,22 @@ import com.example.inventariosappspring.modelo.*;
  */
 
 
-public class Vista extends javax.swing.JFrame {
+public class VistaPrincipal extends javax.swing.JFrame {
    
     // private ProductoControlador controlador;
     private DefaultTableModel modelo;
     static JFrame f;
-    private Vista vista = this;
-    private Agregar agregar ;
+    private VistaPrincipal vista = this;
+    private AgregarVista agregar ;
     ProductoRepositorio repositorio;
     // List<Producto> listaProductos = (List<Producto>) repositorioProducto.findAll();
     
     /**
      * Creates new form formulario
      */
-    public Vista(ProductoRepositorio repositorio) {
+    public VistaPrincipal(ProductoRepositorio repositorio) {
         this.repositorio = repositorio;
-        this.agregar = new Agregar(this.vista);
+        this.agregar = new AgregarVista(this.vista);
         initComponents();
         setLocationRelativeTo(null);
         setTitle("caja de productos");
@@ -45,7 +45,7 @@ public class Vista extends javax.swing.JFrame {
         
     }
 
-    public Agregar getAgregar() {
+    public AgregarVista getAgregar() {
         return agregar;
     }
 

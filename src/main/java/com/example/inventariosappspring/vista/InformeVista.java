@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 // import com.example.inventariosappspring.controlador.ProductoControlador;
 
 
-public class Informe {
+public class InformeVista {
     private Double precioMayor;
     private String precioMayorNombre;
     private Double precioMenor;
@@ -48,8 +48,8 @@ public class Informe {
         this.valorInventario = valorInventario;
     }
     private long valorInventario;
-    private Vista vista;
-    public Informe(Vista vista ){
+    private VistaPrincipal vista;
+    public InformeVista(VistaPrincipal vista ){
         this.vista = vista;
     }
     public void run(){
