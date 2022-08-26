@@ -4,6 +4,8 @@
  */
 package com.example.inventariosappspring.vista;
 
+import java.util.List;
+
 // import java.awt.*;
 
 // import javax.swing.*;
@@ -11,8 +13,9 @@ package com.example.inventariosappspring.vista;
 
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import com.example.inventariosappspring.controlador.ProductoControlador;
 import com.example.inventariosappspring.modelo.Producto;
+import com.example.inventariosappspring.modelo.*;
+
 /**
  *
  * @author javier
@@ -21,23 +24,29 @@ import com.example.inventariosappspring.modelo.Producto;
 
 public class Vista extends javax.swing.JFrame {
    
-    private ProductoControlador controlador;
+    // private ProductoControlador controlador;
     private DefaultTableModel modelo;
     static JFrame f;
     private Vista vista = this;
     private Agregar agregar ;
-   
+    ProductoRepositorio repositorio;
+    // List<Producto> listaProductos = (List<Producto>) repositorioProducto.findAll();
+    
     /**
      * Creates new form formulario
      */
-    public Vista(ProductoControlador controlGeneral) {
-        this.controlador = controlGeneral;
-        this.agregar = new Agregar(this.vista, this.controlador);
+    public Vista(ProductoRepositorio repositorio) {
+        this.repositorio = repositorio;
+        this.agregar = new Agregar(this.vista);
         initComponents();
         setLocationRelativeTo(null);
         setTitle("caja de productos");
         setVisible(true);
         
+    }
+
+    public Agregar getAgregar() {
+        return agregar;
     }
 
     /**
@@ -71,28 +80,13 @@ public class Vista extends javax.swing.JFrame {
         
        
         cargar();
-         
-        bottonBorrar.setText("Borrar Producto");
-        bottonBorrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bottonBorrarActionPerformed(evt);
-            }
-        });
+        bottonBorrar.setText("Eliminar Producto");
 
         bottonActualizar.setText("Actualizar Producto");
-        bottonActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bottonActualizarActionPerformed(evt);
-            }
-        });
+    
 
         bottonInforme.setText("Generar Informe");
-        bottonInforme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bottonInformeActionPerformed(evt);
-            }
-        });
-       
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,10 +133,22 @@ public class Vista extends javax.swing.JFrame {
     }// </editor-fold>     
     
     
+    public javax.swing.JButton getBottonActualizar() {
+        return bottonActualizar;
+    }
+
+    public javax.swing.JButton getBottonBorrar() {
+        return bottonBorrar;
+    }
+
+    public javax.swing.JButton getBottonInforme() {
+        return bottonInforme;
+    }
+
     public void cargar (){
         
         modelo.setNumRows(0);
-        for (Producto producto : this.controlador.listar()) {
+        for (Producto producto : (List<Producto>) repositorio.findAll() ) {
             String[] fila = {producto.getCodigo()+"", producto.getNombre(), producto.getPrecio()+"", producto.getInventario()+""};
             modelo.addRow(fila);
         }
@@ -151,32 +157,9 @@ public class Vista extends javax.swing.JFrame {
         agregar.jTextInventario.setText("");
     }
                                             
-                                         
+                                              
 
-    private void bottonInformeActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add your handling code here:
-        Informe informe = new Informe(this.vista, this.controlador);
-        informe.run();
-    }                                             
-
-    
-
-
-
-    private void bottonActualizarActionPerformed(java.awt.event.ActionEvent evt) {                                                 
-        // TODO add your handling code here:
-
-        Actualizar actualizar = new Actualizar(this.vista,  this.controlador);
-        actualizar.run();
-        // JOptionPane.showMessageDialog(rootPane, "producto actualizado");
-        
-    }                                                
-
-    private void bottonBorrarActionPerformed(java.awt.event.ActionEvent evt) {                                             
-       
-        Borrar borrar = new Borrar(this.vista, this.controlador);
-        borrar.run();
-    }                                            
+                                            
 
     /**
      * @param args the command line arguments

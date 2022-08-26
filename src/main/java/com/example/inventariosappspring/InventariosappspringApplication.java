@@ -10,6 +10,10 @@ import org.springframework.context.annotation.Bean;
 import com.example.inventariosappspring.controlador.ProductoControlador;
 import com.example.inventariosappspring.modelo.Producto;
 import com.example.inventariosappspring.modelo.ProductoRepositorio;
+import com.example.inventariosappspring.vista.Actualizar;
+import com.example.inventariosappspring.vista.Agregar;
+import com.example.inventariosappspring.vista.Borrar;
+import com.example.inventariosappspring.vista.Informe;
 import com.example.inventariosappspring.vista.Vista;
 
 @SpringBootApplication
@@ -32,8 +36,16 @@ public class InventariosappspringApplication {
 	public void applicationRunner(){
 		// controlador.buscarProductos();
 		// Producto producto = new Producto();
-		ProductoControlador controlador = new ProductoControlador(productoRepositorio);
-		Vista vista = new Vista(controlador);
+		Vista vista = new Vista(productoRepositorio);
+		ProductoControlador controlador = new ProductoControlador(
+			productoRepositorio, 
+			vista,
+			new Actualizar(vista),
+			new Agregar(vista),
+			new Borrar(vista),
+			new Informe(vista)
+			);
+		
 
 	}
 }

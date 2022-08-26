@@ -5,12 +5,12 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import java.awt.event.*;
-import com.example.inventariosappspring.controlador.ProductoControlador;
 public class Actualizar extends JDialog{
     
-    private ProductoControlador controlador;
+    // private ProductoControlador controlador;
     public Actualizar actualizar = this;
     private Vista vista;
+    private Integer id;
     public class AdaptadorNumeros extends KeyAdapter{
         public void keyTyped(KeyEvent e) {
             char c = e.getKeyChar();
@@ -20,12 +20,16 @@ public class Actualizar extends JDialog{
         }
     }
 
-    public Actualizar (Vista vista, ProductoControlador controlador){
+    public Actualizar (Vista vista){
         super(vista, "Actualizar Producto");
-        this.controlador = controlador;
         this.vista = vista;
-        
+        initComponents();
     } 
+
+    public void initComponents(){
+        bnAceptarUp = new javax.swing.JButton("Aceptar");
+    }
+
 
     public void run (){
         
@@ -33,23 +37,12 @@ public class Actualizar extends JDialog{
             JOptionPane.showMessageDialog(null, "Por favor seleccione un producto", "ERROR", 0 );
         } else {
             
-            Integer id = Integer.parseInt(vista.jTable1.getModel().getValueAt(vista.jTable1.getSelectionModel().getMinSelectionIndex(), 0).toString()); 
+            id = Integer.parseInt(vista.jTable1.getModel().getValueAt(vista.jTable1.getSelectionModel().getMinSelectionIndex(), 0).toString()); 
 
             JLabel labelTitle = new JLabel("Actualizar Producto");
             //d.setLayout(null);
-            bnAceptarUp = new javax.swing.JButton("Aceptar");
-            bnAceptarUp.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    if (jTextNombreActualizar.getText().isEmpty() || jTextPrecioActualizar.getText().isEmpty() || jTextInventarioActualizar.getText().isEmpty()){
-                        JOptionPane.showMessageDialog(null, "debe llenar todos los campos");
-                    } else  {
-                        actualizar.setVisible(false);
-                       
-                    }
-                        
-                    
-                }
-            });
+            
+
             bnCancelarUp = new javax.swing.JButton("Cancelar");
             bnCancelarUp.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,38 +50,7 @@ public class Actualizar extends JDialog{
                 }
             });
     
-            bnAceptarUp.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                   
-                    if (jTextNombreActualizar.getText().isEmpty() || jTextPrecioActualizar.getText().isEmpty() || jTextInventarioActualizar.getText().isEmpty()){
-                        JOptionPane.showMessageDialog(null, "debe llenar todos los campos");
-                    } else  {
-                        actualizar.setVisible(false);
-                        int resp = JOptionPane.showConfirmDialog(rootPane, "¿Deseas actualizar el producto?");
-                        switch (resp) {
-                            case 0:
-                                bnActualizarActionPerformed(evt);
-                                vista.cargar();
-                                break;
-                            case 1:
-                                break;
-                            case 2:
-                                break;
-                            }
-                    }
-                        
-                    
-                }
-                private void bnActualizarActionPerformed(java.awt.event.ActionEvent evt){
-        
-                    controlador.actualizar(
-                    id, 
-                    jTextNombreActualizar.getText(), 
-                    Double.parseDouble(jTextPrecioActualizar.getText()),
-                    Integer.parseInt(jTextInventarioActualizar.getText())
-                    );
-                }
-            });
+
         
            
             jTextNombreActualizar = new javax.swing.JTextField();
@@ -138,6 +100,16 @@ public class Actualizar extends JDialog{
     
 
  
+    public javax.swing.JButton getBnAceptarUp() {
+        return bnAceptarUp;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+
+
     private javax.swing.JButton bnCancelarUp;
     private javax.swing.JButton bnAceptarUp;                 
     public javax.swing.JTextField jTextNombreActualizar;

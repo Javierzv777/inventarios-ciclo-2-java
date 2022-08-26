@@ -1,9 +1,9 @@
 package com.example.inventariosappspring.vista;
 
-import javax.swing.JOptionPane;
 
-import com.example.inventariosappspring.controlador.ProductoControlador;
-import com.example.inventariosappspring.modelo.Producto;
+
+// import com.example.inventariosappspring.controlador.ProductoControlador;
+
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
@@ -11,7 +11,7 @@ import java.awt.event.*;
 
 
 public class Agregar extends JPanel{
-    private ProductoControlador controlador;
+    // private ProductoControlador controlador;
     private Vista vista;
     
     public class AdaptadorNumeros extends KeyAdapter{
@@ -23,11 +23,15 @@ public class Agregar extends JPanel{
         }
     }
 
-    public Agregar(Vista vista, ProductoControlador controlador){
-        this.controlador = controlador;
+    public Agregar(Vista vista){
+        // this.controlador = controlador;
         this.vista = vista;
         
-        
+        initComponents();
+          
+    }
+
+    private void initComponents(){
         bottonAgregar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -98,31 +102,15 @@ public class Agregar extends JPanel{
                 .addComponent(bottonAgregar)
                 .addContainerGap())
         );
-        bottonAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bottonAgregarActionPerformed(evt);
-            }
 
-            private void bottonAgregarActionPerformed(java.awt.event.ActionEvent evt) {                                              
-                // TODO add your handling code here:
-                if(jTextNombre.getText().isEmpty() || jTextInventario.getText().isEmpty() || jTextPrecio.getText().isEmpty()){
-                    JOptionPane.showMessageDialog(null, "debe llenar todos los campos");
-                    return;
-                }
-                Producto nuevo = new Producto();
-                nuevo.setNombre(jTextNombre.getText());
-                nuevo.setPrecio(Double.parseDouble(jTextPrecio.getText()));
-                nuevo.setInventario(Integer.parseInt(jTextInventario.getText()));
-                controlador.agregar(nuevo);
-                vista.cargar();
-            }  
-
-           });
-           
-          
+        
     }
 
     
+    public javax.swing.JButton getBottonAgregar() {
+        return bottonAgregar;
+    }
+
     public javax.swing.JButton bottonAgregar;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

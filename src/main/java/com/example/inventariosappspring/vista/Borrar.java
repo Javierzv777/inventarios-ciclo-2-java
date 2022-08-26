@@ -2,13 +2,17 @@ package com.example.inventariosappspring.vista;
 
 import javax.swing.JOptionPane;
 
-import com.example.inventariosappspring.controlador.ProductoControlador;
+// import com.example.inventariosappspring.controlador.ProductoControlador;
 
 public class Borrar {
-    ProductoControlador controlador;
+    // ProductoControlador controlador;
+    private Integer id;
     Vista vista;
-    public Borrar(Vista vista, ProductoControlador controlador){
-        this.controlador = controlador;
+    public Integer getId() {
+        return id;
+    }
+
+    public Borrar(Vista vista){
         this.vista = vista;
         
     }
@@ -21,8 +25,8 @@ public class Borrar {
             switch (resp) {
                 case 0:
                     JOptionPane.showMessageDialog(null, "Producto Eliminado");
-                    Integer id = Integer.parseInt(vista.jTable1.getModel().getValueAt(vista.jTable1.getSelectionModel().getMinSelectionIndex(), 0).toString()); 
-                    this.controlador.eliminar(id);
+                    id = Integer.parseInt(vista.jTable1.getModel().getValueAt(vista.jTable1.getSelectionModel().getMinSelectionIndex(), 0).toString()); 
+                    // this.controlador.eliminar(id);
                     vista.cargar();
                     break;
                 case 1:
