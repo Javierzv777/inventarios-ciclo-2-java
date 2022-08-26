@@ -51,9 +51,6 @@ public class ProductoControlador implements ActionListener{
 
 
     
-    // public List<Producto> listar (){
-  
-    // }
 
     public void agregar (){
 

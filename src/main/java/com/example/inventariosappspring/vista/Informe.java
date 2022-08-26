@@ -3,7 +3,7 @@ package com.example.inventariosappspring.vista;
 import javax.swing.JOptionPane;
 
 // import com.example.inventariosappspring.controlador.ProductoControlador;
-import com.example.inventariosappspring.modelo.Producto;
+
 
 public class Informe {
     private Double precioMayor;
