@@ -30,10 +30,6 @@ public class ProductoControlador implements ActionListener{
         ){
         this.repositorioProducto = repositorioProducto;
         this.vista = vista;
-        // this.actualizar = actualizar;
-        // this.agregar = agregar;
-        // this.borrar = borrar;
-        // this.informe = informe;
         manejadorEventos();
     }
 
@@ -78,7 +74,7 @@ public class ProductoControlador implements ActionListener{
             repositorioProducto.deleteById(borrar.getId());
             vista.cargar();
         }
-        }
+    }
 
     public void actualizar (){
         actualizar = new ActualizarVista(this.vista);

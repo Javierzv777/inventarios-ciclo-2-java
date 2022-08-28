@@ -56,41 +56,7 @@ public class Producto implements Serializable {
         this.inventario = inventario;
     }
 
-    // public Integer getCodigo() {
-    //     return codigo;
-    // }
 
-    // public void setCodigo(Integer codigo) {
-    //     this.codigo = codigo;
-    // }
-
-    // public String getNombre() {
-    //     return nombre;
-    // }
-
-    // public void setNombre(String nombre) {
-    //     this.nombre = nombre;
-    // }
-
-    // public double getPrecio() {
-    //     return precio;
-    // }
-
-    // public void setPrecio(double precio) {
-    //     this.precio = precio;
-    // }
-
-    // public Integer getInventario() {
-    //     return inventario;
-    // }
-
-    // public void setInventario(Integer inventario) {
-    //     this.inventario = inventario;
-    // }
-    // @Override
-    // public String toString() {
-    // return "Producto("
-    // }
 
     @Override
     public String toString() {

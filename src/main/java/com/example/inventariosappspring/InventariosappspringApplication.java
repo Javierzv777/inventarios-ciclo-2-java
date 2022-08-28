@@ -29,8 +29,7 @@ public class InventariosappspringApplication {
 
 	@Bean
 	public void applicationRunner(){
-		// controlador.buscarProductos();
-		// Producto producto = new Producto();
+		
 		VistaPrincipal vista = new VistaPrincipal(productoRepositorio);
 		 new ProductoControlador(
 			productoRepositorio, 
